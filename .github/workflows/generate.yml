@@ -1,0 +1,42 @@
+name: Generate Word Boards
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download word lists
+        run: |
+          curl --fail --location --silent --show-error \
+            https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears.txt \
+            --output common_words.txt
+          curl --fail --location --silent --show-error \
+            https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt \
+            --output all_words.txt
+          test -s common_words.txt
+          test -s all_words.txt
+
+      - name: Generate boards
+        run: python generate_boards.py
+
+      - name: Upload boards.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: word-boards
+          path: boards.json
+          if-no-files-found: error
+          retention-days: 30
