@@ -1,6 +1,6 @@
 # WordBoardGenerator
 
-Generate up to 1,500 word boards without installing Python on your computer.
+Generate up to 1,500 cleaner Words on Stream-style word boards without installing Python on your computer.
 
 ## Run the generator
 
@@ -13,21 +13,29 @@ Generate up to 1,500 word boards without installing Python on your computer.
 
 The generated file is an artifact; it is not automatically committed to this repository. Artifacts are kept for 30 days.
 
-## What it generates
+## Word selection and filtering
 
-- Up to 1,500 randomly ordered root-word boards.
-- Root words are 6–8 letters and must appear in the common-word list and full dictionary.
-- Candidate words are 4–8 letters and must be formable from the root letters, without using any letter more times than it appears in the root.
-- Boards contain up to 24 words, prioritizing common words, and are kept only when they contain at least 8 words.
+The generator starts with a community-compiled Words on Stream word list, then intersects it with a US English common-word list marked as swear-free.
 
-The generator uses an indexed letter-multiset lookup to avoid repeatedly scanning the entire dictionary for every root.
+This means:
+
+- Words must appear in the Words on Stream community list.
+- Words must also appear in the common-word list.
+- Obscure and archaic entries that are not in the common-word list are excluded.
+- The generator does not fall back to obscure dictionary entries just to fill a board.
+- Common plurals and verb forms are kept when they appear in both source lists.
+- Candidate words are 4–9 letters and must be formable from the root letters, without using any letter more times than it appears in the root.
+- Root words are 6–8 letters.
+- Boards contain up to 24 words and are kept only when they contain at least 8 words.
+
+The community Words on Stream list is not confirmed to be the official game's current dictionary. This process uses it as a starting point, then applies a stricter everyday-word filter.
 
 ## Word-list sources
 
-The workflow downloads these lists when it runs; the word lists are not copied into this repository:
+The workflow downloads these lists when it runs:
 
+- Words on Stream community dictionary: [OnyxA314/words_on_stream_solver](https://github.com/OnyxA314/words_on_stream_solver), which credits u/BandedOtter for compiling the list.
 - Common words: [first20hours/google-10000-english](https://github.com/first20hours/google-10000-english), using its US English swear-free list.
-- Full dictionary: [dwyl/english-words](https://github.com/dwyl/english-words), using `words_alpha.txt`.
 
 Please review the source repositories' license terms before using generated boards commercially. In particular, the common-word dataset states that commercial use may require separate licensing.
 
