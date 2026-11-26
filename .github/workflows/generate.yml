@@ -25,10 +25,10 @@ jobs:
             https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears.txt \
             --output common_words.txt
           curl --fail --location --silent --show-error \
-            https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt \
-            --output all_words.txt
+            https://raw.githubusercontent.com/OnyxA314/words_on_stream_solver/main/wos_dictionary.txt \
+            --output wos_dictionary.txt
           test -s common_words.txt
-          test -s all_words.txt
+          test -s wos_dictionary.txt
 
       - name: Generate boards
         run: python generate_boards.py
